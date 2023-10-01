@@ -28,7 +28,7 @@ class AND:
         self.middle_square_seed()
         return self.x
 
-    def random(self, seed=-1):
+    def random(self):
         """
         Generate a random number by generating 10 random numbers and selecting any from it randomly.
 
@@ -36,14 +36,11 @@ class AND:
             float: A random seed in the range (0, 1).
         """
 
-        self.p = self.p if (seed < 0 or seed > 1) else seed
-
         random_numbers = []
         for _ in range(10):
             random_numbers.append(self.gen())
 
         return random_numbers[int(self.p*10)]
-
 
     # Read system entropy from /dev/urandom (Unix/Linux) or os.urandom (cross-platform)
     def seed(self):
