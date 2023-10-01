@@ -1,5 +1,4 @@
-import matplotlib.pyplot as plt
-import random, math, os
+import os
 
 class AND:
     def __init__(self, x=0.1):
@@ -16,24 +15,6 @@ class AND:
         self.x = (self.p * self.x + (self.x - 1)) % m
         return self.x
 
-my_rng, python_rng = [], []
 rng = AND()
 for _ in range(100):
     print(rng.gen())
-
-    python_rng.append(random.uniform(0, 1))
-    my_rng.append(rng.x)
-
-plt.style.use('ggplot')
-plt.figure(figsize=(18, 7))
-plt.title("Pseudorandom numbers", fontsize=16)
-
-plt.plot(my_rng, label="AND algorithm")
-plt.plot(python_rng, label="Python's random module")
-
-plt.xlabel("Iteration", fontsize=12)
-plt.ylabel("Value", fontsize=12)
-plt.grid(True, linestyle='--', alpha=0.5)
-
-plt.legend(fontsize=12)
-plt.show()
