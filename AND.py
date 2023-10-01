@@ -15,6 +15,7 @@ class AND:
         self.x = (self.p * self.x + (self.x - 1)) % m
         return self.x
 
-rng = AND()
-for _ in range(100):
-    print(rng.gen())
+if __name__ == "__main__":
+    rng = AND()
+    for _ in range(100):
+        print(rng.gen())
