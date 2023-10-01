@@ -11,7 +11,39 @@ class AND:
         """
 
         self.x = x
-        self.p = self.seed() if p < 0 else p
+        self.p = self.seed() if (p < 0 or p > 1) else p
+
+    def gen(self, m=1):
+        """
+        Generate a pseudo-random number using the AND algorithm.
+
+        Args:
+            m (float, optional): Modulus for the random number generation (default is 1).
+
+        Returns:
+            float: A pseudo-random number in the range (0, m).
+        """
+
+        self.x = (self.p * self.x + (self.x - 1)) % m
+        self.middle_square_seed()
+        return self.x
+
+    def random(self, seed=-1):
+        """
+        Generate a random number by generating 10 random numbers and selecting any from it randomly.
+
+        Returns:
+            float: A random seed in the range (0, 1).
+        """
+
+        self.p = self.p if (seed < 0 or seed > 1) else seed
+
+        random_numbers = []
+        for _ in range(10):
+            random_numbers.append(self.gen())
+
+        return random_numbers[int(self.p*10)]
+
 
     # Read system entropy from /dev/urandom (Unix/Linux) or os.urandom (cross-platform)
     def seed(self):
@@ -53,23 +85,9 @@ class AND:
         normalized_random = seed / 10**num_digits
         self.p = normalized_random
 
-    def gen(self, m=1):
-        """
-        Generate a pseudo-random number using the AND algorithm.
-
-        Args:
-            m (float, optional): Modulus for the random number generation (default is 1).
-
-        Returns:
-            float: A pseudo-random number in the range (0, m).
-        """
-
-        self.x = (self.p * self.x + (self.x - 1)) % m
-        self.middle_square_seed()
-        return self.x
-
 if __name__ == "__main__":
     rng = AND()
+    print(rng.random())
 
-    for _ in range(10):
-        print(rng.gen())
+    # for _ in range(10):
+    #     print(rng.gen())
